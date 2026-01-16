@@ -103,6 +103,12 @@ pub enum BindError {
     #[error("invalid float literal: {0}")]
     InvalidFloatLiteral(String),
 
+    #[error("invalid node reference")]
+    InvalidNodeReference,
+
+    #[error("unsupported value type")]
+    UnsupportedValueType,
+
     // TODO: Remove this error variant
     #[error("unexpected bind error")]
     Unexpected,
