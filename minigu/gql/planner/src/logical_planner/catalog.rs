@@ -3,8 +3,8 @@ use std::sync::Arc;
 use crate::bound::BoundCatalogModifyingStatement;
 use crate::error::PlanResult;
 use crate::logical_planner::LogicalPlanner;
-use crate::plan::catalog_modify::{CreateGraph, DropGraph};
 use crate::plan::PlanNode;
+use crate::plan::catalog_modify::{CreateGraph, DropGraph};
 
 impl LogicalPlanner {
     pub fn plan_catalog_modifying_statement(
