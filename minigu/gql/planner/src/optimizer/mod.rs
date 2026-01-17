@@ -195,6 +195,14 @@ fn create_physical_plan_impl(logical_plan: &PlanNode) -> PlanResult<PlanNode> {
             Ok(PlanNode::PhysicalVectorIndexScan(vector_scan.clone()))
         }
         PlanNode::LogicalExplain(explain) => Ok(PlanNode::PhysicalExplain(explain.clone())),
+        PlanNode::PhysicalCreateGraph(create_graph) => {
+            assert!(children.is_empty());
+            Ok(PlanNode::PhysicalCreateGraph(create_graph.clone()))
+        }
+        PlanNode::PhysicalDropGraph(drop_graph) => {
+            assert!(children.is_empty());
+            Ok(PlanNode::PhysicalDropGraph(drop_graph.clone()))
+        }
         _ => unreachable!(),
     }
 }

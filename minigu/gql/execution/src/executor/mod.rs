@@ -1,4 +1,5 @@
 pub mod aggregate;
+pub mod catalog_modify;
 pub mod expand;
 pub mod factorized_filter;
 pub mod filter;

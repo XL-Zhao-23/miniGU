@@ -1,4 +1,5 @@
 pub mod call;
+pub mod catalog_modify;
 pub mod expand;
 pub mod explain;
 pub mod filter;
@@ -17,6 +18,7 @@ use minigu_common::data_type::DataSchemaRef;
 use serde::Serialize;
 
 use crate::plan::call::Call;
+use crate::plan::catalog_modify::{CreateGraph, DropGraph};
 use crate::plan::expand::Expand;
 use crate::plan::explain::Explain;
 use crate::plan::filter::Filter;
@@ -100,9 +102,10 @@ pub enum PlanNode {
     //  into complete attribute representations (ArrayRefs) only when required,
     //  to improve performance and reduce unnecessary data loading.
     PhysicalNodeScan(Arc<NodeIdScan>),
-    // PhysicalCatalogModify(Arc<PhysicalCatalogModify>)
     PhysicalExpand(Arc<Expand>),
     PhysicalExplain(Arc<Explain>),
+    PhysicalCreateGraph(Arc<CreateGraph>),
+    PhysicalDropGraph(Arc<DropGraph>),
 }
 
 impl PlanData for PlanNode {
@@ -130,6 +133,8 @@ impl PlanData for PlanNode {
             PlanNode::PhysicalVectorIndexScan(node) => node.base(),
             PlanNode::PhysicalExpand(node) => node.base(),
             PlanNode::PhysicalExplain(node) => node.base(),
+            PlanNode::PhysicalCreateGraph(node) => node.base(),
+            PlanNode::PhysicalDropGraph(node) => node.base(),
         }
     }
 
@@ -157,6 +162,8 @@ impl PlanData for PlanNode {
             PlanNode::PhysicalNodeScan(node) => node.explain(indent),
             PlanNode::PhysicalExpand(node) => node.explain(indent),
             PlanNode::PhysicalExplain(node) => node.explain(indent),
+            PlanNode::PhysicalCreateGraph(node) => node.explain(indent),
+            PlanNode::PhysicalDropGraph(node) => node.explain(indent),
         }
     }
 }
